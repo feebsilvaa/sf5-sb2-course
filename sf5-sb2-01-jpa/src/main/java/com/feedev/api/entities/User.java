@@ -1,5 +1,6 @@
 package com.feedev.api.entities;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.Entity;
@@ -7,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 
 @Entity
 public class User {
@@ -48,11 +48,23 @@ public class User {
 	}
 
 	public Set<Role> getRoles() {
+		if (roles == null) {
+			roles = new HashSet<Role>();
+		}
 		return roles;
 	}
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+	
+	@Override
+	public String toString() {
+		return "User ["
+				+ " id=" + id
+				+ " name=" + name
+				+ " e-mail=" + email
+				+ "]";
 	}
 
 }
