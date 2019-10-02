@@ -1,6 +1,7 @@
 package com.feedev.api.config;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -40,13 +41,24 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
 		}
 		
 		if (!hasDefaultUser) {
-			User user = new User();
-			user.setName(USER_DEFAULT_NAME);
-			user.setEmail(USER_DEFAULT_EMAIL);
-			log.info("Criando massa de dados inicial. {}", user);			
-			this.userRepository.save(user);	
+			log.info("Criando massa de dados inicial.");			
+			createUser(USER_DEFAULT_NAME, USER_DEFAULT_EMAIL);
+		}
+		
+		if (users.isEmpty()) {
+			createUser("João", "joao@sf5sb2.com");
+			createUser("Maria", "maria@sf5sb2.com");		
+		}
+		
+		Optional<User> userOpt = this.userRepository.findById(2L);
+		if (userOpt.isPresent()) { 
+			log.info("Usuário encontrado: {}", userOpt.get());
 		}
 		
 	}
-
+	
+	private void createUser(String name, String email) {
+		User user = new User(name, email);		
+		this.userRepository.save(user);	
+	}
 }
