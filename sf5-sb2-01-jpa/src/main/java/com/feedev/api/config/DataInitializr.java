@@ -46,15 +46,25 @@ public class DataInitializr implements ApplicationListener<ContextRefreshedEvent
 		}
 		
 		if (users.isEmpty()) {
-			createUser("João", "joao@sf5sb2.com");
+			createUser("João Batista", "joao@sf5sb2.com");
+			createUser("João Bosco", "joao@sf5sb2.com");
 			createUser("Maria", "maria@sf5sb2.com");		
 		}
+		
+		log.info("");
 		
 		Optional<User> userOpt = this.userRepository.findById(2L);
 		if (userOpt.isPresent()) { 
 			log.info("Usuário encontrado: {}", userOpt.get());
 		}
 		
+		log.info("listaDeUsuarios: {}", this.userRepository.listaDeUsuarios());
+		log.info("listaDeUsuariosComNome: {}", this.userRepository.listaDeUsuariosComNome("ao"));
+		log.info("findByNameContaining: {}", this.userRepository.findByNameContaining("ao"));
+		log.info("listaDeUsuariosComNomeExato: {}", this.userRepository.listaDeUsuariosComNomeExato("Joao Batista"));
+		log.info("findByName: {}", this.userRepository.findByName("maria"));
+		
+		log.info("");		
 	}
 	
 	private void createUser(String name, String email) {
